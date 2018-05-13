@@ -36,8 +36,6 @@ function pt_paytium_shortcode( $attr, $content = null ) {
 		'image_url'                 => get_option( 'paytium_image_url', '' ),
 		'customer_details'          => ( ! empty( $pt_options['customer_details'] ) ? 'true' : 'false' ),
 		// true or false
-		'button_label'              => get_option( 'button_label', __( 'Pay', 'paytium' ) ),
-		'button_style'              => get_option( 'button_style', '' ),
 		'pt_redirect_url'           => get_option( 'pt_redirect_url', get_permalink() ),
 		'prefill_email'             => 'false',
 		'test_mode'                 => 'live',
@@ -134,13 +132,6 @@ function pt_paytium_shortcode( $attr, $content = null ) {
 		$html .= '<label for="pt-customer-details-country">Land:</label><input type="text" name="pt-customer-details-country" class="pt-customer-details-country" value="" />';
 	}
 
-	// Add a filter here to allow developers to hook into the form
-	$filter_html = '';
-	$html .= apply_filters( 'pt_before_payment_button', $filter_html );
-
-	// Payment button defaults to built-in Paytium class "paytium-button-el" unless set to "none".
-	$html .= '<button class="pt-payment-btn' . ( $button_style == 'none' ? '' : ' paytium-button-el' ) . '"><span>' . $button_label . '</span></button>';
-
 	$html .= '</form>';
 
 	$error_count = Paytium_Shortcode_Tracker::get_error_count();
@@ -160,6 +151,32 @@ function pt_paytium_shortcode( $attr, $content = null ) {
 }
 
 add_shortcode( 'paytium', 'pt_paytium_shortcode' );
+
+/**
+ * Function to process [paytium_button] shortcode
+ *
+ * @since 2.1.0
+ */
+function pt_paytium_button( $attr ){
+
+	$attr = shortcode_atts( array (
+		'style' => get_option( 'paytium_button_style', '' ),
+		'label' => get_option( 'paytium_button_label', __( 'Pay', 'paytium' ) ),
+		'class' => "paytium-button-el"
+	), $attr );
+
+	$html = sprintf(
+		'<button class="pt-payment-btn %s" %s ><span>%s</span></button>',
+		$attr["class"],
+		!empty( $attr["style"] ) ? 'style="'.$attr["style"].'"' : "",
+		$attr["label"]
+	);
+
+	return $html;
+}
+
+add_shortcode( 'paytium_button', 'pt_paytium_button' );
+
 
 /**
  * Function to process [paytium_total] shortcode

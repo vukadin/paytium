@@ -118,6 +118,20 @@ function pt_register_settings() {
 				'type' => 'text',
 				'size' => 'regular-text'
 			),
+			array (
+				'id'   => 'paytium_button_label',
+				'name' => __( 'Payment Button Label', 'paytium' ),
+				'desc' => __( 'Default label of payment button', 'paytium' ),
+				'type' => 'text',
+				'size' => 'regular-text'
+			),
+			array (
+				'id'   => 'paytium_button_style',
+				'name' => __( 'Payment Button Style', 'paytium' ),
+				'desc' => __( 'Default style of payment button', 'paytium' ),
+				'type' => 'text',
+				'size' => 'regular-text'
+			)
 		)
 	);
 
