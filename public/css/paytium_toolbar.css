@@ -1,0 +1,10 @@
+
+/**************************************************************
+ * Toolbar
+ *************************************************************/
+#wpadminbar #wp-admin-bar-paytium .pt-icon {
+    float: left;
+    width: 22px !important;
+    height: 22px !important;
+    margin-top: 5px !important;
+}
