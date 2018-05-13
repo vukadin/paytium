@@ -165,7 +165,11 @@ function pt_paytium_button( $attr ){
 		'class' => "paytium-button-el"
 	), $attr );
 
-	$html = sprintf(
+	// Add a filter here to allow developers to hook into the form
+	$filter_html = '';
+	$html = apply_filters( 'pt_before_payment_button', $filter_html );
+
+	$html .= sprintf(
 		'<button class="pt-payment-btn %s" %s ><span>%s</span></button>',
 		$attr["class"],
 		!empty( $attr["style"] ) ? 'style="'.$attr["style"].'"' : "",
